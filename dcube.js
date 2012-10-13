@@ -1,29 +1,37 @@
-var data = [{year: 2006, books: 54},
-            {year: 2007, books: 43},
-            {year: 2008, books: 41},
-            {year: 2009, books: 44},
-            {year: 2010, books: 35}];
+(function ($, d3) {
 
-var barWidth = 40;
-var width = (barWidth + 10) * data.length;
-var height = 200;
+  var makeBarChart = function (data, id) {
+    
+    var barWidth = 40;
+    var width = (barWidth + 10) * data.length;
+    var height = 200;
 
-var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
-var y = d3.scale.linear().domain([0, d3.max(data, function(datum) { return datum.books; })]).
-  rangeRound([0, height]);
+    var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
+    var y = d3.scale.linear().domain([0, d3.max(data, function(datum) { return datum.books; })]).
+      rangeRound([0, height]);
 
-// add the canvas to the DOM
-var barDemo = d3.select("#d3").
-  append("svg:svg").
-  attr("width", width).
-  attr("height", height);
+    // add the canvas to the DOM
+    var barDemo = d3.select("#"+id).
+      append("svg:svg").
+      attr("width", width).
+      attr("height", height);
 
-barDemo.selectAll("rect").
-  data(data).
-  enter().
-  append("svg:rect").
-  attr("x", function(datum, index) { return x(index); }).
-  attr("y", function(datum) { return height - y(datum.books); }).
-  attr("height", function(datum) { return y(datum.books); }).
-  attr("width", barWidth).
-  attr("fill", "#2d578b");
+    barDemo.selectAll("rect").
+      data(data).
+      enter().
+      append("svg:rect").
+      attr("x", function(datum, index) { return x(index); }).
+      attr("y", function(datum) { return height - y(datum.books); }).
+      attr("height", function(datum) { return y(datum.books); }).
+      attr("width", barWidth).
+      attr("fill", "#2d578b");
+
+    };
+
+  $.fn.extend({
+    dCube: function (options) {
+      makeBarChart(options.data, $(this).attr('id'));
+    }
+  });
+
+}(jQuery, d3));
