@@ -17,12 +17,13 @@
       <div id="d3"></div>
     </div>
     <script>
-      var data = 
-      [{year: 2006, books: 54},
-      {year: 2007, books: 43},
-      {year: 2008, books: 41},
-      {year: 2009, books: 44},
-      {year: 2010, books: 35}];
+      var data = {
+        type: '1d',
+        array: [54, 43, 41, 44, 35],
+        xLabels: [2006, 2007, 2008, 2009, 2010],
+        xName: 'year',
+        yName: 'books'
+      };
 
       $(document).ready(function () {
         $('#d3').dCube({'data': data});
